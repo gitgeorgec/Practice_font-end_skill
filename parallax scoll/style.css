@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    position: relative;
+}
+
+.one {
+    background-image: url("./img/andreas-brucker-630339-unsplash-compressor.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 3;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.two {
+    background-image: url("./img/ilnur-kalimullin-354455-unsplash-compressor.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 2;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.three {
+    background-image: url("./img/mwangi-gatheca-548638-unsplash-compressor.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 1;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.close {
+    opacity: 0;
+}
+
+.layer {
+    position: fixed;
+}
+
+.word {
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.467);
+    color:white;
+    transition: 1.5s;
+}
+
+
+.heart {
+    color: red;
+    position: absolute;
+    z-index: 50;
+    transition: 0.1s;
+    text-shadow: 1px 1px 2px black
+}
+
