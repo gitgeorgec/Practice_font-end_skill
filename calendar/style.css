@@ -1,0 +1,47 @@
+.calendar {
+    width:600px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+.change_btn{
+    position: absolute;
+    width: 500px;
+    display: flex;
+    top:20px;
+    justify-content: space-between;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+.week {
+    display: flex;
+    justify-content: space-around;
+}
+
+.week__day {
+    width: 80px;
+    height: 30px;
+    text-align:center;
+}
+
+.date {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.date__day {
+    width: 80px;
+    text-align: center;
+}
