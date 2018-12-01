@@ -9,6 +9,8 @@ let monthName =["January","Febrary","March","April","May","June","July","Auguest
 let showYear = document.querySelector(".year")
 let showMonth = document.querySelector('.month')
 let dateFrom = document.querySelector(".date") 
+let next = document.querySelector(".next")
+let prev = document.querySelector(".prev")
 
 function getStartWeekDay(year, month){
     let startDay = new Date(year,month,1)
@@ -16,13 +18,13 @@ function getStartWeekDay(year, month){
 }
 
 function getMonthDate(year,month){
-    let testYear = year%4
-    if(testYear === 0){
+    if((year%4===0 && year%100!==0)||(year%400 ===0 && year%3200 !==0)){
         return month_olympic[month]
     }else{
         return month_normal[month]
     }
 }
+
 function renderDate(year, month){
     showYear.innerText = thisYear
     showMonth.innerText = monthName[thisMonth]
@@ -43,11 +45,6 @@ function renderDate(year, month){
     }
 }
 
-renderDate(thisYear,thisMonth)
-
-let next = document.querySelector(".next")
-let prev = document.querySelector(".prev")
-
 next.addEventListener("click", ()=>{
     if(thisMonth<11){
         thisMonth++
@@ -67,3 +64,5 @@ prev.addEventListener("click",()=>{
     }
     renderDate(thisYear,thisMonth)
 })
+
+renderDate(thisYear,thisMonth)
