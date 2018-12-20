@@ -7,6 +7,8 @@ function renderCafe(doc){
     let city = document.createElement('span')
     let cross = document.createElement('div')
     li.setAttribute("data-id", doc.id)
+    name.classList.add("name")
+    city.classList.add("city")
     name.textContent = doc.data().name
     city.textContent = doc.data().city
     cross.textContent = "X"
@@ -52,6 +54,12 @@ db.collection('cafes').orderBy('city').onSnapshot(snapshot => {
         } else if (change.type == "removed"){
             let li = cafeList.querySelector('[data-id='+change.doc.id+']')
             cafeList.removeChild(li)
+        } else if(change.type == "modified"){
+            let li = cafeList.querySelector('[data-id='+change.doc.id+']')
+            let name = li.querySelector(".name")
+            let city = li.querySelector(".city")
+            name.textContent = change.doc.data().name
+            city.textContent = change.doc.data().city
         }
     })
 })
