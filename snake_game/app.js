@@ -1,26 +1,18 @@
 const canvas = document.querySelector('#back')
 const ctx = canvas.getContext('2d');
+const playBtn = document.querySelector('#play')
+const scoreBoard = document.querySelector('#scoreBoard')
+const score = document.querySelector('#score')
 let circles = []
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
-
-// setInterval(()=>{
-//     mouse.x=undefined,
-//     mouse.y=undefined
-// },2000)
-// const mouse ={
-//     x:undefined,
-//     y:undefined
-// }
-// canvas.addEventListener("mousemove",(e)=>{
-//     mouse.x=e.offsetX,
-//     mouse.y=e.offsetY
-// })
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+let scoreCount = 0
 
 window.addEventListener("resize",()=>{
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    init()
 })
 const direction = {
     x:1,
@@ -28,68 +20,27 @@ const direction = {
 }
 
 window.addEventListener("keydown",(e)=>{
-    if(e.code === "ArrowRight"){
+    if(e.code === "ArrowRight" && direction.x !== -1){
         direction.x=1
         direction.y=0
-    }else if(e.code === "ArrowUp"){
+    }else if(e.code === "ArrowUp" && direction.y !== 1){
         direction.x=0
         direction.y=-1
-    }else if(e.code === "ArrowLeft"){
+    }else if(e.code === "ArrowLeft" && direction.x !== 1){
         direction.x=-1
         direction.y=0
-    }else if(e.code === "ArrowDown"){
+    }else if(e.code === "ArrowDown" && direction.y !== -1){
         direction.x=0
         direction.y=1
     }
 })
-// function Circle(x,y,dx,dy,radius) {
-//     const colors = [
-//         '#E3F2FD', '#BBDEFB', '#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#1E88E5', '#1976D2', '#1565C0', '#0D47A1', // Blue 50->900
-//         '#FFF8E1', '#FFECB3', '#FFE082', '#FFD54F', '#FFCA28', '#FFC107', '#FFB300', '#FFA000', '#FF8F00', '#FF6F00' // Amber 50->900
-//       ];
-//     maxRadius = 400
-//     minRadius = 100
-//     this.x = x
-//     this.y = y
-//     this.dx = dx
-//     this.dy = dy
-//     this.radius = radius
-//     this.color = colors[Math.floor(Math.random()*colors.length)]
-//     this.draw = function(){
-//         ctx.beginPath();
-//         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-//         ctx.closePath();
-//         ctx.fillStyle = this.color
-//         ctx.fill();
-//     }
-//     this.update = function(){
-//         this.x += this.dx
-//         this.y += this.dy
-//         if(this.x + this.radius >= canvas.width || this.x -this.radius <= 0){
-//             this.dx = -this.dx
-//         }
-//         if(this.y + this.radius >= canvas.height || this.y -this.radius <= 0){
-//             this.dy = -this.dy
-//         }
-//         // if(mouse.x -this.x < 50 && mouse.x -this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50){
-//         //     if(this.radius < maxRadius){
-//         //         this.radius +=5
-//         //     }
-//         // }else if(this.radius > 0){
-//         //     this.radius -=1
-//         // }
-//         this.draw()
-//     }
-// }
 
-
-function Snake(x,y,dx,dy){
+function Snake(x,y,speed){
     this.x = x
     this.y = y
-    this.dx = dx
-    this.dy = dy
-    this.radius = 10
-    this.color = "#90CAF9"
+    this.speed = speed
+    this.radius = 15
+    this.color = "#fee"
     this.draw = function(){
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
@@ -98,48 +49,99 @@ function Snake(x,y,dx,dy){
         ctx.fill();
     }
     this.update = function(){
-        if(this.x + this.radius >= canvas.width || this.x -this.radius <= 0){
-            this.x = 100
-        }else{
-            this.dx = direction.x
+        // repeat
+        // if(this.x + this.radius >= canvas.width){
+        //     this.x = this.radius
+        // } else if(this.x -this.radius <= 0){
+        //     this.x = canvas.width-this.radius
+        // }
+        // if(this.y + this.radius >= canvas.height){
+        //     this.y = this.radius
+        // } else if(this.y -this.radius <= 0){
+        //     this.y = canvas.height-this.radius
+        // }
+        //
+        if(this.x + this.radius >= canvas.width ||this.x -this.radius <= 0){
+            this.speed = 0
+        } 
+        if(this.y + this.radius >= canvas.height||this.y -this.radius <= 0){
+            this.speed = 0
         }
-        if(this.y + this.radius >= canvas.height || this.y -this.radius <= 0){
-            this.y = 100
-        }else {
-            this.dy = direction.y
-        }
-        this.x += this.dx
-        this.y += this.dy
-        if(this.x + this.radius >= canvas.width || this.x -this.radius <= 0){
-            this.dx = -this.dx
-        }
-        if(this.y + this.radius >= canvas.height || this.y -this.radius <= 0){
-            this.dy = -this.dy
-        }
+        this.x += direction.x*this.speed
+        this.y += direction.y*this.speed
         this.draw()
         }
 }
 
+function Food(x, y){
+    this.x = x,
+    this.y = y
+    this.radius = 15
+    this.draw = function(){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fillStyle = "#ff0000"
+        ctx.fill();
+    }
+}
+
 function animate(){
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    // circles.forEach(circle=>{
-    //     circle.update()
-    // })
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if(snake.x -food.x < 15 && snake.x -food.x > -15 && snake.y - food.y < 15 && snake.y - food.y > -15){
+        food.x = Math.random()*canvas.width
+        food.y = Math.random()*canvas.height
+        console.log(snakeBody.length)
+        scoreCount++
+        score.textContent = scoreCount
+    }else{
+        snakeBody.pop()
+    }
+    snakeBody.forEach(item => {
+        if(item.x === snake.x && item.y === snake.y){
+            snake.speed=0
+        }
+        item.draw()
+    });
+    snakeBody.unshift({
+        x:snake.x,
+        y:snake.y,
+        radius:snake.radius,
+        color:"#eee",
+        draw:snake.draw
+    })
+    food.draw()
     snake.update()
-    raf = window.requestAnimationFrame(animate);
+    if(snake.speed === 0){
+        console.log("stop")
+        playBtn.classList.remove('hide')
+    }else{
+        raf = window.requestAnimationFrame(animate);
+    }
 }
 
 function init(){
-    // circles = []
-    // for(let i = 0; i<1000; i++){
-    //     x = Math.random()*window.innerWidth
-    //     y = Math.random()*window.innerHeight
-    //     dx = Math.random()*(Math.round(Math.random()) * 2 - 1)*3
-    //     dy = Math.random()*(Math.round(Math.random()) * 2 - 1)*3
-    //     circles.push(new Circle(x,y,dx,dy,1))
-    // }
-    snake = new Snake(1000,100,1,0)
+    snakeBody = []
+    snake = new Snake(1000,100,3)
+    for(let i = 0; i<100; i+=1){
+        let item = {
+            x:snake.x-1,
+            y:snake.y,
+            radius:snake.radius,
+            color:"#eee",
+            draw:snake.draw
+        }
+        snakeBody.push(item)
+    }
+    food = new Food(Math.random()*canvas.width,Math.random()*canvas.height) 
     animate()
 }
 
-init()
+playBtn.addEventListener('click',()=>{
+    score.textContent = 0
+    playBtn.classList.add('hide')
+    scoreBoard.classList.remove('hide')
+    init()
+})
