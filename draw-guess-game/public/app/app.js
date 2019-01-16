@@ -9,6 +9,7 @@ $(document).ready(()=>{
     socket.on('chat message',function(msg){
         console.log("get message")
         $('#messages').append($('<li>').text(msg))
+        $('#messages').scrollTop($('#messages')[0].scrollHeight);
     })
     socket.on("join", function(msg){
         $('#messages').append($('<li>').text(msg))
@@ -28,6 +29,9 @@ $(document).ready(()=>{
         ctx.stroke()
         lastX = positionXandY[0]
         lastY = positionXandY[1]
+    })
+    socket.on('play',function(question){
+        $('#question').text(question)
     })
 
 
@@ -57,21 +61,20 @@ $(document).ready(()=>{
         if(!isdrawing) return
         ctx.beginPath()
         ctx.moveTo(lastX, lastY)
-        ctx.lineTo(e.clientX, e.clientY)
+        ctx.lineTo(e.offsetX, e.offsetY)
         ctx.stroke()
-        lastX = e.clientX
-        lastY = e.clientY
-        socket.emit('drawing', [e.clientX, e.clientY])
+        lastX = e.offsetX
+        lastY = e.offsetY
+        socket.emit('drawing', [e.offsetX, e.offsetY])
         ctx.strokeStyle = `black`
     }
     
     canvas.addEventListener("mousedown", (e)=> {
         isdrawing = true
-        lastX = e.clientX
-        lastY = e.clientY
-        socket.emit('start', [e.clientX, e.clientY])
+        lastX = e.offsetX
+        lastY = e.offsetY
+        socket.emit('start', [e.offsetX, e.offsetY])
         console.log(isdrawing)
-    
     })
     
     canvas.addEventListener("mouseup", ()=> {
@@ -84,4 +87,10 @@ $(document).ready(()=>{
     })
     
     canvas.addEventListener("mousemove", draw)
+
+
+    $('#play').on('click',function(){
+        socket.emit('play')
+        $('#play').toggle()
+    })
 })

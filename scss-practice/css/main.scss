@@ -1,0 +1,136 @@
+@import 'colors';
+
+$padding: 15px;
+$border:15px;
+
+
+@function color($color-name){
+    @return map-get($colors, $color-name )
+};
+
+$desktop: 840px;
+@mixin desktop {
+    @media (min-width: #{$desktop}){
+        @content;
+    }
+};
+
+
+body, html {
+    height: 100%;
+}
+
+
+body {
+    margin: 0;
+    #bg {
+        background: color(primary);
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(0 0, 100% 0, 100% 69%, 57% 100%, 0 100%);
+        position: absolute;
+        z-index: -1;
+
+        @include desktop {
+            clip-path: polygon(0 0, 82% 0, 45% 100%, 0% 100%);
+        }
+    }
+
+}
+
+header a {
+    color:#ffffff;
+    text-decoration: none;
+    padding: $padding;
+    display: block;
+    text-transform: uppercase;
+}
+
+main {
+    @include desktop {
+        display: grid;
+        grid-template-columns: 50% auto; 
+        grid-template-areas: 
+        "primary card"
+    }
+
+    section#card {
+        background: #FFF;
+        padding: $padding;
+        margin: 1em;
+        border-radius: $border;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        widows: 80%;
+
+        @include desktop {
+            grid-area: card;
+            height: fit-content;
+            align-self: center;
+            margin: 1rem;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0; 
+        padding: 0;
+        li{
+            margin-bottom: 10px;
+            span {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                background: color(primary-light);
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+    
+            strong {
+                display: inline-block;
+                margin-left: max(40px);
+                margin-top: 10px;
+            }
+        }
+    }
+    section#pirmary {
+        color: #FFF;
+        padding: $padding;
+        text-align: center;
+        @include desktop {
+            grid-area: primary;
+            text-align: left;
+            margin:4rem 0 0 4rem
+        }
+        h1 {
+            font-size: 3rem;
+            margin-top: 10px;
+            text-transform: uppercase; 
+            @include desktop {
+                width:60%;
+                font-size: 4rem;
+                line-height: 3.9rem;
+            }
+        }
+
+        p {
+            font-size: 1.4rem;
+        }
+
+        a {
+            color:color(pirmary-darken);
+            border-radius: $border;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            background: color(accent);
+            display: block;
+            text-align: center;
+            margin: 50px auto 0 auto;
+            padding: $padding;
+            @include desktop {
+                display: inline-block;
+                padding: $padding $padding*4;
+            }
+        }
+    }
+}
