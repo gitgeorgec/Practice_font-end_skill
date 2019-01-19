@@ -24,4 +24,24 @@ code {
   margin:10px;
   border:1px solid red
 }
+.btn-round {
+  align-self:center;
+  font-size:1.4rem; 
+  background:#fff;
+  color:red;
+  border:1px solid red;
+  height:100px;
+  width: 100px;
+  border-radius:50%; 
+  margin: 10px;
+  transition: 0.2s
+}
 
+.btn-round:hover {
+  filter: brightness(0.5)
+}
+
+.link {
+  text-decoration: none;
+  color: inherit
+}
