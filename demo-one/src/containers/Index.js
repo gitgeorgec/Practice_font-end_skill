@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import Card from '../components/card/Card'
 import Card2 from '../components/card/Card2'
 import Button from '../components/button/Button'
+import { changeSubnav } from '../store/actions/subnav'
+import { connect } from 'react-redux'
 
 class Index extends Component {
+
+  MouseEnter=()=>{
+    this.props.changeSubnav("")
+  }
 
   style={
     background:"url(https://images.unsplash.com/photo-1511424323602-d3c1a4138056?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80) fixed center no-repeat ",
@@ -17,7 +23,7 @@ class Index extends Component {
 
   render() {
     return (
-        <div style={this.style} className="container">
+        <div style={this.style} className="container" onMouseEnter={this.MouseEnter}>
           <div style={{display:"flex", margin: "8% 0"}}>
             <div  style={{display:"flex", margin: "5% 0", flex:"0 0 35%", flexDirection:"column", justifyContent:"center"}}>
               <div>
@@ -34,4 +40,10 @@ class Index extends Component {
   }
 }
 
-export default Index;
+function mapStateToProps(state){
+  return {
+    subnav:state.subnav
+  }
+}
+
+export default connect(mapStateToProps,{changeSubnav})(Index);

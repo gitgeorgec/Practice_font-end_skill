@@ -37,20 +37,12 @@ class Navbar extends Component{
   }
 
   MouseEnter=(e)=>{
-    // this.setState({
-    //   hover:e.target.textContent
-    // })
     this.props.changeSubnav(e.target.textContent)
-  }
-  MouseLeave=(e)=>{
-    // this.setState({
-    //   hover:null
-    // })
   }
 
   render(){
     return (
-      <div style={{position:"fixed", width:"100%"}} onMouseLeave={this.MouseLeave}>
+      <div style={{position:"fixed", width:"100%"}}>
         <div style={this.style}>
           <div id="logo" style={{flexGrow:1}}><h1><Link className="link" to={"/"}>PERFECT</Link></h1></div>
             <ul style={this.listStyle}>
