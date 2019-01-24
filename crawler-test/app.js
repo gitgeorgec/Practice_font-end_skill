@@ -1,41 +1,35 @@
 const rp = require('request-promise')
 const cheerio = require('cheerio')
 const Table = require('cli-table')
+const Nightmare = require('nightmare')
+const nightmare = Nightmare({ show: true })
 
-let users = [];
+let title = [];
 
 const options = {
-    url:``,
+    url:`https://udn.com/news/cate/2/6638`,
     json:true
 }
 
 rp(options)
-    .then((data)=>{
-        let userData = []
-        for(let user of data.directory_items){
-            userData.push({name: user.user.username, likes_recived: user.likes_received})
-        }
-        process.stdout.write('loading')
-        getChallengesCompeletedAndPushToUserArray(userData)
+    .then(res=>{
+        $ = cheerio.load(res)
+        $('dt h2').length
+        console.log(title)
     })
     .catch((err)=>{
         console.log(err)
     })
 
-function getChallengesCompeletedAndPushToUserArray(userData){
-    var i = 0;
-    function next(){
-        if(i < userData.length){
-            var options = {
-                url:"" + userData[i].name,
-                transfrom: body => cheerio.load(body)
-            }
-            rp(options)
-                .then(function($){
-                    process.stdout.write(`,`)
-                    const fccAccount = $('h1.landing-heading').length == 0
-                    const challengesPassed = fccAccount?$('tbody tr').length:'unknow'
-                })
-        }
-    }
-}
+// nightmare example
+// nightmare
+//   .goto('https://duckduckgo.com')
+//   .type('#search_form_input_homepage', 'github nightmare')
+//   .click('#search_button_homepage')
+//   .wait('#r1-0 a.result__a')
+//   .evaluate(() => document.querySelector('#r1-0 a.result__a').href)
+//   .end()
+//   .then(console.log)
+//   .catch(error => {
+//     console.error('Search failed:', error)
+//   })
