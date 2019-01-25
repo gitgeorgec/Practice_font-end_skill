@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cat Clicker</title>
+</head>
+    <style>
+        .main{
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            grid-template-areas: 
+                "a b"
+        }
+        .cat-list{
+            grid-area: a
+        }
+
+        .cat-show{
+            grid-area: b
+        }
+    </style>
+<body>
+    <div class="main">
+        <ul class="cat-list">
+        </ul>
+        <div class="cat-show">
+            <img src="" alt="" class="cat-pic">
+            <div class="cat-name"></div>
+            <div class="cat-count"></div>
+        </div>
+    </div>
+
+    <script>
+        const catList = document.querySelector('.cat-list')
+        const count = document.querySelector('.cat-count')
+        const catpic = document.querySelector('.cat-pic')
+        const catName = document.querySelector('.cat-name')
+        function Cat(name, url){
+            this.name = name;
+            this.url = url;
+            this.count = 0
+        } 
+        let catOne = new Cat('A',"https://images.unsplash.com/photo-1494256997604-768d1f608cac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+        let catTwo = new Cat('B',"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+        let catThree = new Cat('C',"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+        let catFour = new Cat('D',"https://images.unsplash.com/photo-1500259571355-332da5cb07aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+        let catFive = new Cat('E',"https://images.unsplash.com/photo-1507984211203-76701d7bb120?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+        let cat = [catOne,catTwo,catThree, catFour,catFive]
+        cat.forEach((item,i)=>{
+            const catListItem = document.createElement('li')
+            catListItem.innerText = item.name
+            catListItem.dataset.order = i
+            catList.appendChild(catListItem)
+        })
+        catList.addEventListener('click',(e)=>{
+            const catInfo = cat[e.target.dataset.order]
+            if(catInfo){
+                catName.innerText = catInfo.name
+                catpic.src = catInfo.url
+                catpic.dataset.order = e.target.dataset.order
+                count.innerText = catInfo.count
+            }
+        })
+
+        catpic.addEventListener("click", (e)=>{
+            const catInfo = cat[e.target.dataset.order]
+            catInfo.count++
+            count.innerText = catInfo.count
+        })
+    </script>
+</body>
+
+
+</html>
