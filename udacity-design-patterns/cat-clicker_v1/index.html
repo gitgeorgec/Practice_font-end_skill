@@ -20,6 +20,13 @@
         .cat-show{
             grid-area: b
         }
+
+        .hide{
+            opacity: 0;
+            height: 0;
+            width: 0;
+            transform: scale(0)
+        }
     </style>
 <body>
     <div class="main">
@@ -31,12 +38,29 @@
             <div class="cat-count"></div>
         </div>
     </div>
+    <div class="admin">
+        <button class="admin-btn">Admin</button>
+        <form action="" class="admin-form hide">
+            <label for="name">name</label>
+            <input type="text" name="name" id="name">
+            <label for="pic">pic</label>
+            <input type="text" name="pic" id="pic">
+            <button class="cancel-btn">cancel</button>
+            <button class="submit-btn">submit</button>
+        </form>
+    </div>
 
     <script>
         const catList = document.querySelector('.cat-list')
         const count = document.querySelector('.cat-count')
         const catpic = document.querySelector('.cat-pic')
         const catName = document.querySelector('.cat-name')
+        const adminBtn = document.querySelector('.admin-btn')
+        const adminForm = document.querySelector('.admin-form')
+        const cancelBtn = document.querySelector('.cancel-btn')
+        const submitBtn = document.querySelector('.submit-btn')
+        const inputName = document.querySelector('#name')
+        const inputPic = document.querySelector('#pic')
         function Cat(name, url){
             this.name = name;
             this.url = url;
@@ -48,12 +72,15 @@
         let catFour = new Cat('D',"https://images.unsplash.com/photo-1500259571355-332da5cb07aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
         let catFive = new Cat('E',"https://images.unsplash.com/photo-1507984211203-76701d7bb120?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
         let cat = [catOne,catTwo,catThree, catFour,catFive]
-        cat.forEach((item,i)=>{
-            const catListItem = document.createElement('li')
-            catListItem.innerText = item.name
-            catListItem.dataset.order = i
-            catList.appendChild(catListItem)
-        })
+        function renderList(){
+            catList.innerHTML=""
+            cat.forEach((item,i)=>{
+                const catListItem = document.createElement('li')
+                catListItem.innerText = item.name
+                catListItem.dataset.order = i
+                catList.appendChild(catListItem)
+            })
+        }
         catList.addEventListener('click',(e)=>{
             const catInfo = cat[e.target.dataset.order]
             if(catInfo){
@@ -61,6 +88,7 @@
                 catpic.src = catInfo.url
                 catpic.dataset.order = e.target.dataset.order
                 count.innerText = catInfo.count
+
             }
         })
 
@@ -69,6 +97,27 @@
             catInfo.count++
             count.innerText = catInfo.count
         })
+
+        adminBtn.addEventListener("click", ()=>{
+            adminForm.classList.toggle('hide')
+        })
+        cancelBtn.addEventListener("click", (e)=>{
+            e.preventDefault()
+            adminForm.classList.add('hide')
+        })
+        submitBtn.addEventListener("click", (e)=>{
+            e.preventDefault()
+            if(catpic.dataset.order){
+                cat[catpic.dataset.order].name = inputName.value
+                cat[catpic.dataset.order].url = inputPic.value
+                catName.innerText = inputName.value
+                catpic.src = inputPic.value
+                renderList()
+            }
+            adminForm.classList.add('hide')
+        })
+
+        renderList()
     </script>
 </body>
 
