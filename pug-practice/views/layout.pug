@@ -1,0 +1,49 @@
+doctype html  
+html(lang='en')  
+	head
+		title= title
+		link(rel="stylesheet", href="css/style.css")
+	body
+		h1= message
+		div.container
+			p Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, itaque doloremque. Mollitia dicta hic nobis rem at! Dolores possimus praesentium inventore, quam debitis in voluptas, minima enim, fugiat ea iure!
+			a(href="https://google.com") this is google
+
+		div
+			ul
+				li first	
+				li second
+				li third
+		
+		label(for="input-name") name
+		input(name="name", type="text", id="input-name", placeholder="input your name")
+    	
+
+		- const myClass = ["class1", "class2", "class3"]
+		div(class=myClass)
+			h1 I have some class
+
+		- const myStyle = {"color":"blue", "font-size":"40px"}
+
+		div(style=myStyle) I have some style
+
+		h1 below is table
+		table
+			thead
+				tr
+					td one
+					td two
+			tbody
+				tr
+					td this is fisrt
+					td this is second 
+				tr
+					td sdfasdk;
+					td dsfdskf
+
+		
+		div
+			button#click click me to trigger the js file
+block content
+
+	script(src="js/main.js")
