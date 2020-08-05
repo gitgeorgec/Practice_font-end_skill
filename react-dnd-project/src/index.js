@@ -8,19 +8,19 @@ const App = () => {
 	const [ data, setData, ] = useState(initialData);
 
 	const _handleDargStart = () => {
-		document.body.style.color = 'orange'
-		document.body.style.transition = '0.2s'
+		// document.body.style.color = 'orange'
+		// document.body.style.transition = '0.2s'
 	}
 	const _handleDargUpdate = update => {
-		const { destination } = update;
-		const opacity = destination ? destination.index / Object.keys(data.tasks).length: 0;
+		// const { destination } = update;
+		// const opacity = destination ? destination.index / Object.keys(data.tasks).length: 0;
 
-		document.body.style.background = `rgba(153, 141, 217, ${opacity})`
+		// document.body.style.background = `rgba(153, 141, 217, ${opacity})`
 	}
 
 	const _handleDargEnd = result => {
-		document.body.style.color = 'inherit'
-		document.body.style.background = 'inherit'
+		// document.body.style.color = 'inherit'
+		// document.body.style.background = 'inherit'
 		const { destination, source, draggableId, type } = result;
 
 		if (!destination) { return; }
@@ -91,6 +91,7 @@ const App = () => {
 		}
 	}
 
+	console.log(data)
 	return (
 		<div >
 			<DragDropContext
@@ -126,8 +127,7 @@ const App = () => {
 							})}
 							{provided.placeholder}
 						</div>
-					)
-					}
+					)}
 				</Droppable>
 			</DragDropContext>
 		</div>

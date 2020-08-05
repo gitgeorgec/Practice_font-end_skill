@@ -43,7 +43,7 @@ const Column = ({ column, tasks, index}) => {
 										padding: '8px',
 										flexGrow: 1,
 										minHeight: '100px',
-										background: snapshot.isDraggingOver ? 'lightblue' : 'white',
+										// background: snapshot.isDraggingOver ? 'lightblue' : 'white',
 									}}
 									ref={provider.innerRef}
 									{...provider.droppableProps}
